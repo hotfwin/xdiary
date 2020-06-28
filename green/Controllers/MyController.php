@@ -10,7 +10,7 @@ class MyController extends Controller
 
 	protected $helpers = [];
 
-
+ 
 	public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
 	{
 		parent::initController($request, $response, $logger);
@@ -19,7 +19,10 @@ class MyController extends Controller
 		// Preload any models, libraries, etc, here.
 		//--------------------------------------------------------------------
 		// E.g.:
-		// $this->session = \Config\Services::session();
+		$this->session = \Config\Services::session();
+
+		$this->className = $this->request->uri->getSegment(1) ?: \Config\Services::routes()->getDefaultController();
+		$this->data['className']=$this->className;
 	}
 
 	public function testView(){

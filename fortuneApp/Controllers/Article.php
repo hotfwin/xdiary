@@ -38,7 +38,11 @@ class Article extends FortuneController
 
         parent::index();
     }
+
     public function test(){
+        $articleModel=new \App\Models\ArticleModel();
+        echo $articleModel->test();
+
         exit('kkk');
     }
 

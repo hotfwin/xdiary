@@ -1,4 +1,6 @@
-<?php namespace Config;
+<?php
+
+namespace Config;
 
 require_once SYSTEMPATH . 'Config/AutoloadConfig.php';
 
@@ -18,7 +20,7 @@ class Autoload extends \CodeIgniter\Config\AutoloadConfig
 
 	//--------------------------------------------------------------------
 
-	/**
+	/** 
 	 * Collects the application-specific autoload settings and merges
 	 * them with the framework's required settings.
 	 *
@@ -54,6 +56,8 @@ class Autoload extends \CodeIgniter\Config\AutoloadConfig
 			'App'         => APPPATH,                // To ensure filters, etc still found,
 			APP_NAMESPACE => APPPATH,                // For custom namespace
 			'Config'      => APPPATH . 'Config',
+			'App\Models' => FCPATH . '../Models',      //同时加载要目录下的Models
+			'App\Libraries' => FCPATH . '../Libraries',      //同时加载要目录下的Libraries
 		];
 
 		/**

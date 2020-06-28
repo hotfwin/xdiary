@@ -41,7 +41,7 @@
                                 <input type="submit" class="btn btn-outline btn-success" value="搜索" style="padding-right: 20px; padding-left: 20px;padding-top:5px;padding-bottom: 5px;">
                             </li>
                             <li>
-                                <a href="<?= site_url('article/index') ?>" class="btn btn-outline btn-warning" style="padding-right: 20px; padding-left: 20px;padding-top:5px;padding-bottom: 5px;">重置</a>
+                                <a href="<?= site_url($className.'/index') ?>" class="btn btn-outline btn-warning" style="padding-right: 20px; padding-left: 20px;padding-top:5px;padding-bottom: 5px;">重置</a>
                             </li>
 
                             <!-- <li>
