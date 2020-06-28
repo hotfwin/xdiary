@@ -1,5 +1,16 @@
 <?php
 
+/***
+ *|----------------------------
+ *| Example.php
+ *|----------------------------
+ *| 后台核心控制器
+ *| 问题：  
+ *|------------------------------------------------------------------------
+ *| Author:临来笑笑生     Email:luck@elapse.date     Modify: 2020.05.12
+ *|------------------------------------------------------------------------
+ * ***/
+
 namespace App\Controllers;
 
 class Example extends FortuneController
@@ -45,20 +56,20 @@ class Example extends FortuneController
         // $files = $this->request->getFiles();   //多文件
         // print_r($files);
 
-        $postData['invoiceFile']=$path.$newName;
-		$postData['invoicePath']=$path;
-		$postData['invoiceTitle']=$newName;  //不还扩展名的名，这里无
-		$postData['invoiceType']=$type;
-        $postData['invoiceExtension']=$extension;
-        
-        /*划分年、月、日，以便统计搜索*/
-		if(isset($postData['invoiceDate'])){
-			$temp=explode('-',$postData['invoiceDate']);
-			$postData['year']=$temp['0'];
-			$postData['month']=$temp['1'];
-			$postData['day']=$temp['2'];
-		}
+        $postData['invoiceFile'] = $path . $newName;
+        $postData['invoicePath'] = $path;
+        $postData['invoiceTitle'] = $newName;  //不还扩展名的名，这里无
+        $postData['invoiceType'] = $type;
+        $postData['invoiceExtension'] = $extension;
 
-		$postData['create']=time();
+        /*划分年、月、日，以便统计搜索*/
+        if (isset($postData['invoiceDate'])) {
+            $temp = explode('-', $postData['invoiceDate']);
+            $postData['year'] = $temp['0'];
+            $postData['month'] = $temp['1'];
+            $postData['day'] = $temp['2'];
+        }
+
+        $postData['create'] = time();
     }
 }

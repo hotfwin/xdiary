@@ -1,5 +1,16 @@
 <?php
 
+/***
+ *|----------------------------
+ *| MyController.php
+ *|----------------------------
+ *| 核心控制器
+ *| 问题：  
+ *|------------------------------------------------------------------------
+ *| Author:临来笑笑生     Email:luck@elapse.date     Modify: 2020.05.12
+ *|------------------------------------------------------------------------
+ * ***/
+
 namespace App\Controllers;
 
 use App\Models\NewsModel;     //加载数据模型
@@ -13,7 +24,7 @@ class Luck extends MyController
         }
         $data['title'] = '幸运的';
 
-        echo view('luck', $data);
+        return $this->view('luck/index', $data);
     }
 
     public function listNews()
@@ -47,8 +58,8 @@ class Luck extends MyController
     {
 
         // print_r($this->request->uri);exit; 
-      
-       
+
+
 
         $timer = new \CodeIgniter\Debug\Timer();
         $timer = \Config\Services::timer();

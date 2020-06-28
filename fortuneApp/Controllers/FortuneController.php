@@ -1,5 +1,16 @@
 <?php
 
+/***
+ *|----------------------------
+ *| FortuneController.php
+ *|----------------------------
+ *| 后台核心控制器
+ *| 问题：  
+ *|------------------------------------------------------------------------
+ *| Author:临来笑笑生     Email:luck@elapse.date     Modify: 2020.05.12
+ *|------------------------------------------------------------------------
+ * ***/
+
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
@@ -23,10 +34,9 @@ class FortuneController extends Controller
 	protected $where = [];
 	protected $like = [];
 	protected $orderBy = '';   //排序  
-	protected $join=[];       //联表查询数据
-	protected $rules=[];       //$this->validate的认证规则数组(按CodeIgniter4的规则)
+	protected $join = [];       //联表查询数据
+	protected $rules = [];       //$this->validate的认证规则数组(按CodeIgniter4的规则)
 	// protected $pageSize='13'; //每页8、13适合
-
 
 	public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
 	{
@@ -56,7 +66,7 @@ class FortuneController extends Controller
 		$this->data['menus'] = $menus;
 
 		$this->className = $this->request->uri->getSegment(1) ?: \Config\Services::routes()->getDefaultController();
-		$this->data['className']=$this->className;
+		$this->data['className'] = $this->className;
 	}
 
 	/***
@@ -85,13 +95,13 @@ class FortuneController extends Controller
 		}
 
 		foreach ($this->join as $key => $value) {
-			$this->model->join($value['table'],$value['cond'],$value['type']);
+			$this->model->join($value['table'], $value['cond'], $value['type']);
 			// $this->model->join('goods_class','goods_class.id = goods.cid','LEFT');
 			//使用：
 			//    $this->join[] = ['table' => 'goods_class', 'cond' => 'goods_class.id = goods.cid', 'type' => 'LEFT',];
 		}
 
-		$this->model->orderBy($this->orderBy ?: $this->model->table.'.id DESC');
+		$this->model->orderBy($this->orderBy ?: $this->model->table . '.id DESC');
 
 		// $this->data['list'] = $this->model->findAll();
 		$this->data['total'] = $this->model->countAllResults(false);
@@ -130,9 +140,9 @@ class FortuneController extends Controller
 			}
 
 			/**是否要校验输入数据 */
-			if(!empty($this->rules)){
-				if(!$this->validate($this->rules)){			
-					return redirect()->to(site_url($this->className.'/create/'))->withInput();
+			if (!empty($this->rules)) {
+				if (!$this->validate($this->rules)) {
+					return redirect()->to(site_url($this->className . '/create/'))->withInput();
 					exit;
 				}
 			}
@@ -161,7 +171,7 @@ class FortuneController extends Controller
 				$recordModel->insert($record);
 			}
 
-			return $this->showMessage('新增数据成功',TRUE,$jumpURL);
+			return $this->showMessage('新增数据成功', TRUE, $jumpURL);
 		}
 
 		// method_exists();
@@ -169,56 +179,57 @@ class FortuneController extends Controller
 		echo $this->view(strtolower($this->className) . '/create');
 	}
 
-	public function edit($id=0){
-        if(!$id){
-            return $this->showMessage('请选择要修改的数据！！',FALSE);
-        }
+	public function edit($id = 0)
+	{
+		if (!$id) {
+			return $this->showMessage('请选择要修改的数据！！', FALSE);
+		}
 
 		/* 加载数据模型 */
 		$modelName = '\\App\\Models\\' . ucfirst($this->className) . 'Model';
 		$this->model = new $modelName();
 
-		$edit=$this->model->find($id);
+		$edit = $this->model->find($id);
 
-        if(!$edit){
-            return $this->showMessage('要修改的数据不存在！！',FALSE);
-        }
+		if (!$edit) {
+			return $this->showMessage('要修改的数据不存在！！', FALSE);
+		}
 
-        if($pData=$this->request->getPost()){
+		if ($pData = $this->request->getPost()) {
 			$jumpURL = $pData['jumpURL'] ?? FALSE;
 			unset($pData['jumpURL']);
-			
-            //去掉空值
-            // foreach ($pData as $key => $value) {
-            //     if($value==''){
-            //         unset($pData[$key]);
-            //     }
-            // }
 
-            //before  after
-            //是否要修改数据前处理特别数据！！
-            if(method_exists($this,'beforeEdit')){
-                $this->beforeEdit($pData);
+			//去掉空值
+			// foreach ($pData as $key => $value) {
+			//     if($value==''){
+			//         unset($pData[$key]);
+			//     }
+			// }
+
+			//before  after
+			//是否要修改数据前处理特别数据！！
+			if (method_exists($this, 'beforeEdit')) {
+				$this->beforeEdit($pData);
 			}
 
 			/**是否要校验输入数据 */
-			if(!empty($this->rules)){
-				if(!$this->validate($this->rules)){			
-					return redirect()->to(site_url($this->className.'/edit/'.$id))->withInput();
+			if (!empty($this->rules)) {
+				if (!$this->validate($this->rules)) {
+					return redirect()->to(site_url($this->className . '/edit/' . $id))->withInput();
 					exit;
 				}
 			}
-			
-			$this->model->update($id,$pData);
 
-            //插入后处理
-            if(method_exists($this,'afterEdit')){
-                $this->afterEdit($id);  
-            }
+			$this->model->update($id, $pData);
 
-            /*是否记录操作日志*/
-            if($this->record){
-                $record['table_id'] = $id;
+			//插入后处理
+			if (method_exists($this, 'afterEdit')) {
+				$this->afterEdit($id);
+			}
+
+			/*是否记录操作日志*/
+			if ($this->record) {
+				$record['table_id'] = $id;
 				$record['table_name'] = $this->className;
 				$record['user_id'] = $this->session->get('id');
 				$record['username'] = $this->session->get('username');
@@ -228,46 +239,47 @@ class FortuneController extends Controller
 
 				$recordModel = new \App\Models\RecordModel();
 				$recordModel->insert($record);
-            }
+			}
 
-            return $this->showMessage('数据修改成功',TRUE,$jumpURL);
+			return $this->showMessage('数据修改成功', TRUE, $jumpURL);
+		}
 
-        } 
-
-		$this->data['edit']=$edit;
+		$this->data['edit'] = $edit;
 
 		echo $this->view(strtolower($this->className) . '/edit');
 	}
-	
-	public function detail($id=0){
-        if(!$id){
-            return $this->showMessage('请选择要查看的数据！！',FALSE);
-        }
 
-        /* 加载数据模型 */
+	public function detail($id = 0)
+	{
+		if (!$id) {
+			return $this->showMessage('请选择要查看的数据！！', FALSE);
+		}
+
+		/* 加载数据模型 */
 		$modelName = '\\App\\Models\\' . ucfirst($this->className) . 'Model';
 		$this->model = new $modelName();
 
-		$detail=$this->model->find($id);
+		$detail = $this->model->find($id);
 
-        if(!$detail){
-            return $this->showMessage('要查看的数据不存在！！',FALSE);
-        }
+		if (!$detail) {
+			return $this->showMessage('要查看的数据不存在！！', FALSE);
+		}
 
-        $this->data['detail']=$detail;
-    }
+		$this->data['detail'] = $detail;
+	}
 
 
-	public function delete($id=0){
-        $jumpURL=$this->request->getVar('jumpURL')??FALSE;
-        if(!$id){
-            return $this->showMessage('没有要删除的数据',FALSE,$jumpURL);
-        }
+	public function delete($id = 0)
+	{
+		$jumpURL = $this->request->getVar('jumpURL') ?? FALSE;
+		if (!$id) {
+			return $this->showMessage('没有要删除的数据', FALSE, $jumpURL);
+		}
 
-        //删除前数据前处理数据！！
-        if(method_exists($this,'beforeDelete')){
-            $this->beforeDelete($id);
-        }
+		//删除前数据前处理数据！！
+		if (method_exists($this, 'beforeDelete')) {
+			$this->beforeDelete($id);
+		}
 
 		//删除数据
 		/* 加载数据模型 */
@@ -276,11 +288,11 @@ class FortuneController extends Controller
 		$this->model->delete($id);
 
 		//插入后处理
-		if(method_exists($this,'afterDelete')){
-			$this->afterDelete($id);  
+		if (method_exists($this, 'afterDelete')) {
+			$this->afterDelete($id);
 		}
 
-        /*是否记录操作日志*/
+		/*是否记录操作日志*/
 		if ($this->record) {
 			$record['table_id'] = $id;
 			$record['table_name'] = $this->className;
@@ -294,15 +306,16 @@ class FortuneController extends Controller
 			$recordModel->insert($record);
 		}
 
-        return $this->showMessage('数据删除成功',TRUE,$jumpURL);
+		return $this->showMessage('数据删除成功', TRUE, $jumpURL);
 	}
-	
-	public function expurgate(){
-		// echo '多选删除';
-		$ids=$this->request->getVar('id');
 
-		if(empty($ids)){
-			return $this->showMessage('没有要删除的数据！',FALSE);
+	public function expurgate()
+	{
+		// echo '多选删除';
+		$ids = $this->request->getVar('id');
+
+		if (empty($ids)) {
+			return $this->showMessage('没有要删除的数据！', FALSE);
 		}
 
 		/* 加载数据模型 */
@@ -342,14 +355,14 @@ class FortuneController extends Controller
 	{
 		$this->session->setFlashdata('type', $type);  //$this->session->flashdata('message');
 		$this->session->setFlashdata('message', $message);
-		
+
 		if (!$jumpUrl) {
 			$jumpUrl = site_url($this->className . '/index/');
 		} else {
 			$jumpUrl = strpos($jumpUrl, 'http') === false ? site_url($jumpUrl) : $jumpUrl;
 		}
 
-		return Header("Location:$jumpUrl"); 
+		return Header("Location:$jumpUrl");
 
 
 		// echo $jumpUrl;exit; 
