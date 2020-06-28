@@ -8,7 +8,7 @@
     <meta name="author" content="临来笑笑生">
     <meta name="keyword" content="風味雲、風創未來">
     <meta name="description" content="Fortune(財運雲) OA">
-    <title>風味雲（www.gust.cn）後臺</title>
+    <title>後臺</title>
     <base href="<?= base_url('static/miminium'); ?>/" />
     <!-- start: Css -->
     <link rel="stylesheet" type="text/css" href="asset/css/bootstrap.min.css">
@@ -49,7 +49,7 @@
                     <span class="bottom"></span>
                 </div>
                 <a href="<?= site_url() ?>" class="navbar-brand">
-                    <b>Tokay</b>
+                    <b>XDiary</b>
                     <!-- <img src="asset/img/fcwl.png" width="158" style="margin-top: -10px;"> -->
                 </a>
 

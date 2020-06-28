@@ -48,6 +48,9 @@ Vagrantfile
 #-------------------------
 # Temporary Files
 #-------------------------
+public/static/captcha/*
+!public/static/captcha/hy.ttf
+
 writable/cache/*
 !writable/cache/index.html
 

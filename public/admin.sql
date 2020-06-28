@@ -5,18 +5,18 @@
 -- HeidiSQL 版本:                  9.5.0.5263
 -- --------------------------------------------------------
 -- 导出 admin 的数据库结构
-DROP DATABASE IF EXISTS `admin`;
+DROP DATABASE IF EXISTS `xdiary`;
 
-CREATE DATABASE IF NOT EXISTS `admin`
+CREATE DATABASE IF NOT EXISTS `xdiary`
 /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_bin */
 ;
 
-USE `admin`;
+USE `xdiary`;
 
--- 导出  表 tokay.to_admins 结构
-DROP TABLE IF EXISTS `to_admins`;
+-- 导出  表 tokay.admins 结构
+DROP TABLE IF EXISTS `admins`;
 
-CREATE TABLE IF NOT EXISTS `to_admins` (
+CREATE TABLE IF NOT EXISTS `admins` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
     `username` varchar(16) NOT NULL COMMENT '登录名',
     `password` varchar(40) NOT NULL,
@@ -32,15 +32,15 @@ CREATE TABLE IF NOT EXISTS `to_admins` (
     KEY `group` (`role`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 DEFAULT CHARSET = utf8 COMMENT = '后台用户表';
 
--- 正在导出表  tokay.to_admins 的数据：~0 rows (大约)
+-- 正在导出表  tokay.admins 的数据：~0 rows (大约)
 DELETE FROM
-    `to_admins`;
+    `admins`;
 
-/*!40000 ALTER TABLE `to_admins` DISABLE KEYS */
+/*!40000 ALTER TABLE `admins` DISABLE KEYS */
 ;
 
 INSERT INTO
-    `to_admins` (
+    `admins` (
         `id`,
         `username`,
         `password`,
@@ -55,24 +55,24 @@ INSERT INTO
 VALUES
     (
         1,
-        'admin',
-        '024f43383adace22e439c19545f168098c6bcb3e',
-        '245af2964d',
+        'fortune',
+        'c2a3b691ee173bbaee19a5d6aae8c995507fa706',
+        '25ee364a54',
         'luck@fmail.pro',
         '13428122341',
         1,
-        1,
+        0,
         '2008-08-18 18:58:13',
         NULL
     );
 
-/*!40000 ALTER TABLE `to_admins` ENABLE KEYS */
+/*!40000 ALTER TABLE `admins` ENABLE KEYS */
 ;
 
--- 导出  表 tokay.to_roles 结构
-DROP TABLE IF EXISTS `to_roles`;
+-- 导出  表 tokay.roles 结构
+DROP TABLE IF EXISTS `roles`;
 
-CREATE TABLE IF NOT EXISTS `to_roles` (
+CREATE TABLE IF NOT EXISTS `roles` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `name` varchar(20) NOT NULL,
     `rights` varchar(255) DEFAULT NULL,
@@ -81,25 +81,25 @@ CREATE TABLE IF NOT EXISTS `to_roles` (
     UNIQUE KEY `name` (`name`)
 ) ENGINE = MyISAM AUTO_INCREMENT = 2 DEFAULT CHARSET = utf8 COMMENT = '管理角色组表';
 
--- 正在导出表  tokay.to_roles 的数据：1 rows
+-- 正在导出表  tokay.roles 的数据：1 rows
 DELETE FROM
-    `to_roles`;
+    `roles`;
 
-/*!40000 ALTER TABLE `to_roles` DISABLE KEYS */
+/*!40000 ALTER TABLE `roles` DISABLE KEYS */
 ;
 
 INSERT INTO
-    `to_roles` (`id`, `name`, `rights`, `default`)
+    `roles` (`id`, `name`, `rights`, `default`)
 VALUES
     (1, 'root=>超级管理员', '', '');
 
-/*!40000 ALTER TABLE `to_roles` ENABLE KEYS */
+/*!40000 ALTER TABLE `roles` ENABLE KEYS */
 ;
 
--- 导出  表 tokay.to_rights 结构
-DROP TABLE IF EXISTS `to_rights`;
+-- 导出  表 tokay.rights 结构
+DROP TABLE IF EXISTS `rights`;
 
-CREATE TABLE IF NOT EXISTS `to_rights` (
+CREATE TABLE IF NOT EXISTS `rights` (
     `right_id` tinyint(10) unsigned NOT NULL AUTO_INCREMENT,
     `right_name` varchar(50) DEFAULT NULL,
     `right_class` varchar(30) DEFAULT NULL,
@@ -108,10 +108,10 @@ CREATE TABLE IF NOT EXISTS `to_rights` (
     PRIMARY KEY (`right_id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8 COMMENT = '权限表';
 
--- 导出  表 tokay.to_menus 结构
-DROP TABLE IF EXISTS `to_menus`;
+-- 导出  表 tokay.menus 结构
+DROP TABLE IF EXISTS `menus`;
 
-CREATE TABLE IF NOT EXISTS `to_menus` (
+CREATE TABLE IF NOT EXISTS `menus` (
     `id` tinyint(10) unsigned NOT NULL AUTO_INCREMENT,
     `order_by` tinyint(2) unsigned NOT NULL COMMENT '排序',
     `class` varchar(20) NOT NULL COMMENT '类',
@@ -125,15 +125,15 @@ CREATE TABLE IF NOT EXISTS `to_menus` (
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 9 DEFAULT CHARSET = utf8 COMMENT = '后台菜单表';
 
--- 正在导出表  tokay.to_menus 的数据：~8 rows (大约)
+-- 正在导出表  tokay.menus 的数据：~8 rows (大约)
 DELETE FROM
-    `to_menus`;
+    `menus`;
 
-/*!40000 ALTER TABLE `to_menus` DISABLE KEYS */
+/*!40000 ALTER TABLE `menus` DISABLE KEYS */
 ;
 
 INSERT INTO
-    `to_menus` (
+    `menus` (
         `id`,
         `order_by`,
         `class`,
@@ -232,13 +232,13 @@ VALUES
         1
     );
 
-/*!40000 ALTER TABLE `to_menus` ENABLE KEYS */
+/*!40000 ALTER TABLE `menus` ENABLE KEYS */
 ;
 
--- 导出  表 tokay.to_record 结构
-DROP TABLE IF EXISTS `to_record`;
+-- 导出  表 tokay.record 结构
+DROP TABLE IF EXISTS `record`;
 
-CREATE TABLE IF NOT EXISTS `to_record` (
+CREATE TABLE IF NOT EXISTS `record` (
     `id` int(100) unsigned NOT NULL AUTO_INCREMENT,
     `table_id` int(10) unsigned NOT NULL COMMENT '操作表ID',
     `table_name` varchar(180) NOT NULL COMMENT '操作表名',
@@ -250,12 +250,12 @@ CREATE TABLE IF NOT EXISTS `to_record` (
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8 COMMENT = '操作记录表';
 
--- 正在导出表  tokay.to_record 的数据：~0 rows (大约)
+-- 正在导出表  tokay.record 的数据：~0 rows (大约)
 DELETE FROM
-    `to_record`;
+    `record`;
 
-/*!40000 ALTER TABLE `to_record` DISABLE KEYS */
+/*!40000 ALTER TABLE `record` DISABLE KEYS */
 ;
 
-/*!40000 ALTER TABLE `to_record` ENABLE KEYS */
+/*!40000 ALTER TABLE `record` ENABLE KEYS */
 ;

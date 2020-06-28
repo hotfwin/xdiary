@@ -26,7 +26,9 @@
                     <table class="table table-striped table-bordered" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th><input type="checkbox" class="icheck" name="checkbox1" /></th>
+                                <th>
+									<input type="checkbox" class="icheck gou" name="checkbox1" />
+								</th>
                                 <th>ID</th>
                                 <th>登录名</th>
                                 <th>Email</th>
@@ -43,8 +45,8 @@
                                 <?php foreach ($list as $key => $value) : ?>
                                     <tr>
                                         <td>
-                                            <input type="checkbox" class="icheck" name="checkbox1" />
-                                        </td>
+											<input type="checkbox" class="icheck none" name="id[<?= $key ?>]" value="<?= $value->id ?>" />
+										</td>
                                         <td><?= $value->id ?></td>
                                         <td><?= $value->username ?></td>
                                         <td><?= $value->email ?></td>
@@ -77,6 +79,28 @@
 
                                     </tr>
                                 <?php endforeach; ?>
+                                <tr>
+									<td colspan="999">
+										<div class="pull-right">
+											<?= $pager->links() ?>
+										</div>
+
+										<input type="checkbox" class="icheck pull-left gou" name="checkbox1" />
+
+										<!-- <input type="button" class="btn btn-gradient btn-danger" value="删除" /> -->
+										<input type="Submit" onclick="return confirm('是否删除选中的数据？？');" class="btn btn-gradient btn-danger" value="删除" />
+
+										<input type="button" class=" btn btn-gradient btn-primary" value="修改" />
+										<a href="<?= site_url('menus/create/') ?>" title="新增" class="btn  btn-gradient btn-success">新增</a>
+										<!-- <input type="button" class="btn btn-gradient btn-default" value="返回" /> -->
+										<input type="button" class="btn btn-gradient btn-default" value="返回" onclick="javascript:history.back(-1);" />
+
+										<input type="button" class="btn btn-gradient btn-warning" value="警告" />
+										<input type="button" class="btn btn-gradient btn-info" value="通知" />
+
+									</td>
+
+								</tr>
                             <?php else : ?>
                                 <tr>
                                     <td colspan="200" style="text-align: center;">
@@ -87,14 +111,6 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-md-6" style="padding-top:20px;">
-                    <span>总共<?= $total ?>条</span>
-                </div>
-                <div class="col-md-6">
-                    <div class="pull-right">
-                        <?= $pager->links() ?>
-                    </div>
-                </div>
 
 
             </div>
@@ -104,13 +120,37 @@
 </div>
 
 <script src="asset/js/plugins/icheck.min.js"></script>
+
 <script type="text/javascript">
-    $(document).ready(function() {
+	$(document).ready(function() {
+		// 选项样式
+		$('input').iCheck({
+			checkboxClass: 'icheckbox_flat-red',
+			radioClass: 'iradio_flat-red'
+		});
+		/*全选与反选*/
+		var num = 0;
+		$('.gou').next().each(function(i) {
+			$(this).on('click', function() {
 
-        $('input').iCheck({
-            checkboxClass: 'icheckbox_flat-red',
-            radioClass: 'iradio_flat-red'
-        });
+				if (num == 0) {
+					$('.icheck').prop('checked', true).parent().addClass('checked');
+					num += 1;
+				} else {
+					$('.icheck').prop('checked', false).parent().removeClass('checked');
+					num = 0;
+				}
+			});
+		});
 
-    });
+		/*搜索居右设置*/
+		var width = $(window).width();
+		if (width > 990) {
+			$('#search ul').addClass('pull-right');
+		}
+		$("#search-btn").click(function() {
+			$('#search').toggle();
+		});
+
+	});
 </script>

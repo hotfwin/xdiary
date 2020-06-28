@@ -14,6 +14,7 @@
 		<div class="col-md-12">
 			<div class="panel form-element-padding">
 				<div class="panel-heading">
+					<a href="javascript:history.back(-1);" class="btn btn-default right">返回</a>
 					<h4>新增菜单表单</h4>
 				</div>
 				<div class="panel-body" style="padding-bottom:30px;">
@@ -37,7 +38,7 @@
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label text-right">排序</label>
-								<div class="input-group">
+								<div class="input-group" style="margin-top: -15px;">
 	                                <span class="input-group-addon" id="basic-addon3">从小排到大</span>
 			                        <input type="text" name="order_by" value="1"  class="form-control" id="basic-url" aria-describedby="basic-addon3">
                                 </div>
@@ -47,6 +48,13 @@
 							</div>
 
 							<div class="form-group"><label class="col-sm-2 control-label text-right">是否显示</label>
+								<div class="col-sm-10">
+									<input type="checkbox" id="show" checked >
+									<input type="hidden" name="is_show" value="1">
+								</div>
+							</div>
+
+							<!-- <div class="form-group"><label class="col-sm-2 control-label text-right">是否显示</label>
 								<div class="col-sm-10">
 									 
 	                                <div class="mini-onoffswitch onoffswitch-success">
@@ -60,7 +68,7 @@
 									</div>
 
 								</div>
-							</div>
+							</div> -->
 
 							<div class="form-group">
 								<label class="col-sm-2 control-label text-right">所属上级</label>
@@ -118,3 +126,24 @@
 	</div>
 </div>
 
+
+<link rel="stylesheet" type="text/css" href="asset/css/bootstrap-switch.css">
+<script src="asset/js/bootstrap-switch.js"></script>
+<script type="text/javascript">
+	$("#show").bootstrapSwitch({  
+		onText:'显示',  
+		offText:'隐藏' ,
+		onColor:"info",
+		offColor:"danger",  
+		size:"small",
+		onSwitchChange:function(event,state){  
+			if(state==true){  
+				// alert('显示');
+				$("input[name='is_show']").val(1);
+			}else{  
+				// alert('不显示');
+				$("input[name='is_show']").val(0);
+			} 
+		}  
+	});
+</script>

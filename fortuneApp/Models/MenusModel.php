@@ -5,7 +5,7 @@ namespace App\Models;
 class MenusModel extends \CodeIgniter\Model
 {
     protected $table = 'menus';
-    // protected $primaryKey = 'id';
+    protected $primaryKey = 'id';
     protected $returnType = 'object';     //设置返回结果为对象
     protected $allowedFields = [
         'id', 'order_by', 'class', 'method', 'name', 'level', 'parent', 'icon', 'department', 'is_show'
@@ -15,6 +15,7 @@ class MenusModel extends \CodeIgniter\Model
     {
         $this->where('level', $level);
         return $this->findAll();
+        // $this->find($id);
     }
 
     public function getMenusParent($parent, $show = FALSE)

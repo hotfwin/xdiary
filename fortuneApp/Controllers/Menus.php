@@ -10,6 +10,7 @@ class Menus extends FortuneController
         $this->where['parent'] = $parent;
 
         $this->data['parent'] = $parent;
+        
         parent::index();
     }
 

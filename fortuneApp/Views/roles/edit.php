@@ -14,6 +14,7 @@
 		<div class="col-md-12">
 			<div class="panel form-element-padding">
 				<div class="panel-heading">
+					<a href="javascript:history.back(-1);" class="btn btn-default right">返回</a>
 					<h4>角色修改</h4>
 				</div>
 				<div class="panel-body" style="padding-bottom:30px;">

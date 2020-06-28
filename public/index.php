@@ -10,7 +10,7 @@ unset($minPHPVersion);
 define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR);     
 
 //路径配置文件，根据自己的来配置
-$pathsPath = realpath(FCPATH . '../app/Config/Paths.php');
+$pathsPath = realpath(FCPATH . '../green/Config/Paths.php'); 
 // ^^^ 如果您移动您的应用程序文件夹，请更改此选项
 
 /*

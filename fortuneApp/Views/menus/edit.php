@@ -14,6 +14,7 @@
 		<div class="col-md-12">
 			<div class="panel form-element-padding">
 				<div class="panel-heading">
+					<a href="javascript:history.back(-1);" class="btn btn-default right">返回</a>
 					<h4>菜单修改</h4>
 				</div>
 				<div class="panel-body" style="padding-bottom:30px;">
@@ -33,7 +34,7 @@
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label text-right">排序</label>
-								<div class="input-group col-sm-10">
+								<div class="input-group col-sm-10" style="margin-top: -15px;">
 	                                <span class="input-group-addon" id="basic-addon3">前</span>
 			                        <input type="range" name="order_by" min="1" max="10" value="<?=$edit->order_by?>"  class="form-control" id="basic-url" aria-describedby="basic-addon3">
 			                        <span class="input-group-addon" id="basic-addon3">后</span>
@@ -42,32 +43,14 @@
 							<div class="form-group"><label class="col-sm-2 control-label text-right">ICON</label>
 								<div class="col-sm-10"><input type="text" name="icon" value="<?=$edit->icon?>" class="form-control border-bottom" placeholder="icon小图标类名"></div>
 							</div>
+							 
+
 							<div class="form-group"><label class="col-sm-2 control-label text-right">是否显示</label>
 								<div class="col-sm-10">
-									 
-	                                <div class="mini-onoffswitch onoffswitch-success">
-										<input type="radio" name="is_show" value="1" class="onoffswitch-checkbox" id="myonoffswitch1FC" <?=$edit->is_show=='1'?'checked':''?> >
-										<label class="onoffswitch-label" for="myonoffswitch1FC" title="显示"></label>
-									</div>
-
-									<div class="mini-onoffswitch onoffswitch-default">
-										<input type="radio" name="is_show" value="0" class="onoffswitch-checkbox" id="myonoffswitch1FE" <?=$edit->is_show=='0'?'checked':''?> >
-										<label class="onoffswitch-label" for="myonoffswitch1FE" title="不显示"></label>
-									</div>
-
+									<input type="checkbox" id="show" <?=$edit->is_show=='1'?'checked':''?> >
+									<input type="hidden" name="is_show" value="<?=$edit->is_show?>">
 								</div>
-							</div>
-
-							<!-- <div class="form-group"><label class="col-sm-2 control-label text-right">是否显示</label>
-								<div class="col-sm-10">
-									<div class="col-sm-12 padding-0">
-										<input type="radio" name="is_show" value="1" > 显示
-									</div>
-									<div class="col-sm-12 padding-0">
-										<input type="radio" name="is_show" value="0" > 不显示
-									</div>
-								</div>
-							</div> -->
+							</div> 
 
 							<div class="form-group">
 								<label class="col-sm-2 control-label text-right">所属上级</label>
@@ -130,3 +113,24 @@
 	</div>
 </div>
 
+
+<link rel="stylesheet" type="text/css" href="asset/css/bootstrap-switch.css">
+<script src="asset/js/bootstrap-switch.js"></script>
+<script type="text/javascript">
+	$("#show").bootstrapSwitch({  
+		onText:'显示',  
+		offText:'隐藏' ,
+		onColor:"success",
+		offColor:"danger",  
+		size:"small",
+		onSwitchChange:function(event,state){  
+			if(state==true){  
+				// alert('显示');
+				$("input[name='is_show']").val(1);
+			}else{  
+				// alert('不显示');
+				$("input[name='is_show']").val(0);
+			} 
+		}  
+	});
+</script>
