@@ -51,6 +51,9 @@ Vagrantfile
 public/static/captcha/*
 !public/static/captcha/hy.ttf
 
+public/static/uploads/*
+!public/static/captcha/index.html
+
 writable/cache/*
 !writable/cache/index.html
 
