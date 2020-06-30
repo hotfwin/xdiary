@@ -16,9 +16,8 @@
 
 // exit('公用函数定在这里');
 
-if (! function_exists('echoLuck'))
-{
-	function echoLuck(string $name='临来笑笑生')
+if (!function_exists('echoLuck')) {
+	function echoLuck(string $name = '临来笑笑生')
 	{
 		return $name;
 	}
@@ -27,8 +26,7 @@ if (! function_exists('echoLuck'))
 
 
 //改造这个，使后台分页适应
-if (! function_exists('current_url'))
-{
+if (!function_exists('current_url')) {
 	/**
 	 * Current URL
 	 *
@@ -45,8 +43,8 @@ if (! function_exists('current_url'))
 
 		// echo $uri;echo '<hr>';
 
-		$baseURL=config('App')->baseURL;
-		$baseURL.=config('App')->indexPage.'/';
+		$baseURL = config('App')->baseURL;
+		$baseURL .= config('App')->indexPage . '/';
 
 
 		// If hosted in a sub-folder, we will have additional
@@ -56,20 +54,46 @@ if (! function_exists('current_url'))
 
 		// echo $baseUri;echo '<hr>';
 
-		if (! empty($baseUri->getPath()))
-		{
+		if (!empty($baseUri->getPath())) {
 			$path = rtrim($baseUri->getPath(), '/ ') . '/' . $uri->getPath();
 
 			$uri->setPath($path);
 		}
 
- 
+
 
 		// Since we're basing off of the IncomingRequest URI,
 		// we are guaranteed to have a host based on our own configs.
 		return $returnObject
 			? $uri
-			: (string)$uri->setQuery('');
+			: (string) $uri->setQuery('');
 	}
 }
 
+//文章阅读权限：0免费、1登录、2私密
+if (!function_exists('articleAvailable')) {
+	function articleAvailable($available)
+	{
+		$temp = '';
+		switch ($available) {
+			case '0':
+				# code...
+				$temp = '免费';
+				break;
+			case '1':
+				# code...
+				$temp = '登录可阅';
+				break;
+			case '2':
+				# code...
+				$temp = '私密';
+				break;
+
+			default:
+				# code...
+				$temp = '其它';
+				break;
+		}
+		return $temp;
+	}
+}

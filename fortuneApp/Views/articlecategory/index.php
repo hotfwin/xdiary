@@ -1,7 +1,7 @@
 <div class="panel box-shadow-none content-header">
     <div class="panel-body">
         <div class="col-md-12">
-            <h3 class="animated fadeInLeft">文章列表</h3>
+            <h3 class="animated fadeInLeft">文章分类</h3>
             <div class="row">
                 <ol class="animated fadeInDown breadcrumb col-md-2 col-sm-12 col-xs-12">
                     <li><a href="<?= site_url() ?>">首页</a></li>
@@ -19,35 +19,20 @@
                         <form method="get" class="input-group">
 
                             <li class="input-group">
-                                <span class="input-group-addon">标题</span>
-                                <input class="form-control" type="text" name="title" value="<?= $_GET['title'] ?? '' ?>" placeholder="" style="height:35px;width:130px">
+                                <span class="input-group-addon">分类名</span>
+                                <input class="form-control" type="text" name="category" value="<?= $_GET['category'] ?? '' ?>" placeholder="" style="height:35px;width:130px">
                             </li>
 
-                            <li class="input-group">
+                            <!-- <li class="input-group">
                                 <span class="input-group-addon" style="height:34px;">创建时间</span>
                                 <input type="text" name="create" value="<?= $_GET['create'] ?? '' ?>" placeholder="请选择日期" id="date" class="form-control" style="height:35px;width:100px">
-                            </li>
-
-                            <li class="input-group" style="margin-right:5px;">
-                                <select name="category_id" class="form-control" >
-                                    <option value="">所属分类</option>
-                                    <?php
-                                    $articleCategoryModel = new \App\Models\ArticleCategoryModel();
-                                    $categoryAll = $articleCategoryModel->findAll();
-                                    if (isset($categoryAll)) : ?>
-                                        <?php foreach ($categoryAll as $key => $value) : ?>
-                                            <option value="<?= $value->id ?>" <?=  isset($_GET['category_id']) && $_GET['category_id'] == $value->id ? 'selected="selected"' : '' ?>><?= $value->category ?></option>
-                                        <?php endforeach; ?>
-                                    <?php endif; ?>
-                                </select>
-                            </li>
+                            </li> -->
 
                             <li class="input-group">
-                                <select name="available" class="form-control" >
-                                    <option value="">阅读权限</option>
-                                    <option value="0" <?= isset($_GET['available']) && $_GET['available'] == '0' ? 'selected="selected"' : '' ?>>免费</option>
-                                    <option value="1" <?= isset($_GET['available']) && $_GET['available'] == '1' ? 'selected="selected"' : '' ?>>登录</option>
-                                    <option value="2" <?= isset($_GET['available']) && $_GET['available'] == '2' ? 'selected="selected"' : '' ?>>私密</option>
+                                <select name="show" class="form-control">
+                                    <option value="">是否显示</option>
+                                    <option value="0" <?= isset($_GET['show']) && $_GET['show'] == '0' ? 'selected="selected"' : '' ?>>不显示</option>
+                                    <option value="1" <?= isset($_GET['show']) && $_GET['show'] == '1' ? 'selected="selected"' : '' ?>>显示</option>
 
                                 </select>
                             </li>
@@ -86,7 +71,7 @@
 
                 <div class="col-md-12 " style="padding-bottom:20px;">
                     <!-- <a href="javascript:history.back(-1);" class="right btn btn-gradient btn-default" style="margin-left:8px;" >后退</a> -->
-                    <a href="<?= site_url('article/create/') ?>" title="新增" class="right btn btn-gradient btn-info">新增</a>
+                    <a href="<?= site_url('articleCategory/create/') ?>" title="新增" class="right btn btn-gradient btn-info">新增</a>
                     <h4 style="padding-left:10px;">列表（<?= $total ?>条）</h4>
                 </div>
 
@@ -98,14 +83,12 @@
                                     <th>
                                         <input type="checkbox" class="icheck gou" name="checkbox1" />
                                     </th>
-                                    <th>标题</th>
-                                    <th>所属分类</th>
-                                    <th>阅读权限</th>
+                                    <th>文章分类名</th>
+                                    <th>SEO标题</th>
+                                    <th>SEO关键词</th>
+                                    <th>状态</th>
                                     <th>用户ID</th>
-                                    <th>浏览</th>
                                     <th>创建时间</th>
-                                    <th>预览</th>
-
 
                                     <th>操作</th>
                                 </tr>
@@ -118,35 +101,28 @@
                                             <td>
                                                 <input type="checkbox" class="icheck none" name="id[<?= $key ?>]" value="<?= $value->id ?>" />
                                             </td>
-                                            <td><b class="hidden-md hidden-lg">标题：</b><?= $value->title ?></td>
-                                            <td><b class="hidden-md hidden-lg">所属分类：</b><?= $value->category ?></td>
-                                            <td><b class="hidden-md hidden-lg">阅读权限：</b><?= articleAvailable($value->available) ?></td>
-                                            <td><b class="hidden-md hidden-lg">用户ID：</b><?= $value->user_id ?></td>
-                                            <td><b class="hidden-md hidden-lg">浏览：</b><?= $value->visit ?></td>
-
-                                            <td><b class="hidden-md hidden-lg">创建时间：</b><?= date('Y-m-d H:i', $value->create) ?></td>
+                                            <td><b class="hidden-md hidden-lg">文章分类名：</b><?= $value->category ?></td>
+                                            <td><b class="hidden-md hidden-lg">SEO标题：</b><?= $value->seo_title ?></td>
+                                            <td><b class="hidden-md hidden-lg">SEO关键词：</b><?= $value->seo_keywords ?></td>
                                             <td>
-                                                <a href="//<?= $_SERVER['HTTP_HOST'] . '/article/detail/' . $value->id ?>" target="_blank">点我预览</a>
+                                                <b class="hidden-md hidden-lg">状态：</b>
+                                                <?=$value->show=='1'?'<span class="label label-info">显示</span>':'<span class="label  label-danger">不显示</span>'?>
+
+                                                <!-- <span class="label label-info">显示</span>
+                                                <span class="label  label-danger">永久冻结</span>
+                                                <span class="label  label-warning">解冻</span> -->
+
                                             </td>
 
+                                            <td><b class="hidden-md hidden-lg">用户ID：</b><?= $value->create_id ?></td>
+
+                                            <td><b class="hidden-md hidden-lg">创建时间：</b><?= $value->create_time ?></td>
+
                                             <td>
-                                                <div class="btn-group">
-                                                    <a href="<?= site_url('article/edit/' . $value->id) ?>" title="修改" class="btn btn-xs btn-info">
-                                                        <i class="ace-icon fa fa-pencil bigger-120"></i>
-                                                    </a>
-                                                    <a href="<?= site_url('article/delete/' . $value->id) ?>" title="删除" class="btn btn-xs btn-danger" onclick="return confirm('是否要删除文章:<?= $value->title ?>（ID：<?= $value->id ?>）？？');">
-                                                        <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                                                    </a>
-                                                </div>
+                                                <a href="<?= site_url('article/index/?category_id='.$value->id) ?>" style="color:#27C24C;"><i class="fa fa-cny"></i>此分类文章 <span class="text-muted"></span></a> |
+                                                <a href="<?= site_url('articleCategory/edit/' . $value->id) ?>"><i class="fa fa-edit"></i>修改 <span class="text-muted"></span></a> |
+                                                <a style="color: red;" href="<?= site_url('articleCategory/delete/' . $value->id) ?>" onclick="return confirm('是否要删除ID:<?= $value->id ?>（是否要删除文章：<?= $value->category ?>）？？');"><i class="fa fa-trash-o"></i>删除</a>
                                             </td>
-
-
-
-                                            <!-- <td>
-                                                <a href="" style="color:#27C24C;"><i class="fa fa-cny"></i>去记账 <span class="text-muted"></span></a> |
-                                                <a href="<?= site_url('article/edit/' . $value->id) ?>"><i class="fa fa-edit"></i>修改 <span class="text-muted"></span></a> |
-                                                <a style="color: red;" href="<?= site_url('article/delete/' . $value->id) ?>" onclick="return confirm('是否要删除ID:<?= $value->id ?>（是否要删除文章：<?= $value->title ?>）？？');"><i class="fa fa-trash-o"></i>删除</a>
-                                            </td> -->
 
                                         </tr>
                                     <?php endforeach; ?>
@@ -162,7 +138,7 @@
                                             <input type="Submit" onclick="return confirm('是否删除选中的数据？？');" class="btn btn-gradient btn-danger" value="删除" />
 
                                             <!-- <input type="button" class=" btn btn-gradient btn-primary" value="修改" /> -->
-                                            <a href="<?= site_url('article/create/') ?>" title="新增" class="btn  btn-gradient btn-success">新增</a>
+                                            <a href="<?= site_url('articleCategory/create/') ?>" title="新增" class="btn  btn-gradient btn-success">新增</a>
                                             <!-- <input type="button" class="btn btn-gradient btn-default" value="返回" /> -->
                                             <input type="button" class="btn btn-gradient btn-default" value="后退" onclick="javascript:history.back(-1);" />
 
@@ -177,7 +153,7 @@
                                 <?php else : ?>
                                     <tr>
                                         <td colspan="200" style="text-align: center;">
-                                            暂无数据!! 现在<a href="<?= site_url('article/create/') ?>">新增</a>数据
+                                            暂无数据!! 现在<a href="<?= site_url('articleCategory/create/') ?>">新增</a>数据
                                         </td>
                                     </tr>
 

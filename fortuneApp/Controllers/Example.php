@@ -37,7 +37,9 @@ class Example extends FortuneController
 
         if (!$file->isValid()) {
             $erorr = $file->getErrorString() . $file->getError();
-            exit("文件上传出错：{$erorr}");
+            //输出json数据
+            $this->response->setHeader('Access-Control-Allow-Origin', '*');
+            return $this->response->setJSON($return);
         }
 
         // $path= WRITEPATH . 'uploads/';

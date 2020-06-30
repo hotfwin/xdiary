@@ -2,7 +2,7 @@
 
 /***
  *|----------------------------
- *| ArticleModel.php
+ *| ArticleContentModel.php
  *|----------------------------
  *|  
  *| 问题：  
@@ -11,22 +11,18 @@
  *|------------------------------------------------------------------------
  * ***/
 
-namespace App\Models;
+namespace App\Models; 
 
-class ArticleModel extends \CodeIgniter\Model
+class ArticleContentModel extends \CodeIgniter\Model
 {
-    protected $table = 'article';
+    protected $table = 'article_content';
     protected $primaryKey = 'id';
     protected $returnType = 'object';     //设置返回结果为对象
     protected $allowedFields = [
-        'title', 'cover', 'summary', 'seo_title', 'seo_keywords',
-        'seo_description', 'content_id', 'category_id', 'category',
-        'columns_id', 'available', 'nav_id', 'visit', 'collect', 'share',
-        'user_id', 'username', 'create', 'last_time',
+        'id', 'content',
     ];
 
-    public function test()
-    {
+    public function test(){
         return 'kkk';
     }
 }

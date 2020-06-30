@@ -10,24 +10,42 @@
  *| Author:临来笑笑生     Email:luck@elapse.date     Modify: 2020.05.12
  *|------------------------------------------------------------------------
  * ***/
+
 namespace App\Controllers;
 
-class Article extends MyController{
-    public function index(){
+class Article extends MyController
+{
+	public function index()
+	{
 
-        //SELECT * FROM `article` ORDER BY `id` desc LIMIT 13
+		//SELECT * FROM `article` ORDER BY `id` desc LIMIT 13
 
-        $articleModel=new \App\Models\ArticleModel();
-        $articleModel->orderBy('id desc');
+		$articleModel = new \App\Models\ArticleModel();
+		$articleModel->orderBy('id desc');
 
-        $this->data['total'] = $articleModel->countAllResults(false);
+		$this->data['total'] = $articleModel->countAllResults(false);
 		$this->data['list'] = $articleModel->paginate(config('Pager')->perPage);
 		$this->data['pager'] = $articleModel->pager;
 
-        return $this->view('article/index');
-    }
+		return $this->view('article/index');
+	}
 
-    public function indexYL()
+	public function detail($id)
+	{
+		$articleModel=new \App\Models\ArticleModel();
+		$detail=$articleModel->find($id);
+
+		//取得文章内容
+		$articleContentModel=new \App\Models\ArticleContentModel();
+		$content=$articleContentModel->find($detail->content_id);
+		$detail->content=$content?$content->content:false;
+
+		$this->data['detail']=$detail;
+		return $this->view('article/detail');
+
+	}
+
+	public function indexYL()
 	{
 
 		/* 加载数据模型 */
