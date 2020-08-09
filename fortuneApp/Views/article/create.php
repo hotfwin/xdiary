@@ -74,6 +74,27 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="col-sm-2 control-label text-right">所属专栏：</label>
+                        <div class="col-sm-10">
+                            <div class="input-group col-sm-10">
+
+                                <select name="columns_id" class="form-control" id="c_id" aria-describedby="basic-addon3">
+                                    <option value="">请选择</option>
+                                    <?php
+                                    $columnModel = new \App\Models\ColumnModel();
+                                    $columnAll = $columnModel->findAll();
+                                    if (isset($columnAll)) : ?>
+                                        <?php foreach ($columnAll as $key => $value) : ?>
+                                            <option value="<?= $value->id ?>"><?= $value->title ?></option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </select>
+                                <span class="input-group-addon" id="basic-addon3"><a href="<?= site_url('column/create') ?>">新增专栏</a></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="col-sm-2 control-label text-right">阅读权限：</label>
                         <div class="col-sm-10">
                             <select name="available" class="form-control" id="basic-url" aria-describedby="basic-addon3">

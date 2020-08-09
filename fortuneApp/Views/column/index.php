@@ -115,13 +115,10 @@
                                             <td><b class="hidden-md hidden-lg">文章数：</b><?= $value->complete.'/'.$value->amount ?></td>
                                             <td><b class="hidden-md hidden-lg">SEO标题：</b><?= $value->seo_title ?></td>
                                             <td><b class="hidden-md hidden-lg">SEO关键词：</b><?= $value->seo_keywords ?></td>
+                                            <td><b class="hidden-md hidden-lg">用户ID：</b><?= $value->create_id ?></td>
+                                            
                                             <td><b class="hidden-md hidden-lg">创建时间：</b><?= date('Y-m-d H:i:s',$value->create) ?></td>
                                             
-
-                                            <td><b class="hidden-md hidden-lg">用户ID：</b><?= $value->create_id ?></td>
-
-                                            <td><b class="hidden-md hidden-lg">创建时间：</b><?= $value->create ?></td>
-
                                             <td>
                                                 <a href="<?= site_url('article/index/?columns_id='.$value->id) ?>" style="color:#27C24C;"><i class="fa fa-cny"></i>此分类文章 <span class="text-muted"></span></a> |
                                                 <a href="<?= site_url('column/edit/' . $value->id) ?>"><i class="fa fa-edit"></i>修改 <span class="text-muted"></span></a> |

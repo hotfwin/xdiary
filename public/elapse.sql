@@ -62,7 +62,7 @@ CREATE TABLE `column` (
   `price` decimal(15,2) DEFAULT '0' COMMENT '价格',
   `visit` int(11) NOT NULL DEFAULT 0 COMMENT '阅读次数',
   `collect` int(11) NOT NULL DEFAULT 0 COMMENT '收藏次数',
-  `amount` int(11) COMMENT '专栏文章数',
+  `amount` int(11) NOT NULL DEFAULT 0 COMMENT '专栏文章数',
   `complete` int(11) NOT NULL DEFAULT 0 COMMENT '已发布文章数',
   `seo_title` varchar(255) DEFAULT NULL COMMENT 'SEO标题',
   `seo_keywords` varchar(255) DEFAULT NULL COMMENT 'SEO关键词',

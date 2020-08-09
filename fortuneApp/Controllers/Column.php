@@ -36,5 +36,6 @@ class Column extends FortuneController
             'title' => 'required|min_length[2]|max_length[116]'
         ];    //校验表单
 
+        $post['create'] = time();    //创建时间
     }
 }
