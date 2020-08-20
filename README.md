@@ -1,5 +1,6 @@
 # 个人站点（含前台与后台管理），基于CodeIgniter4框架
- 
+1.composer install
+
 ## 服务器
 
 PHP version 7.2 或者更高版本，要有以下扩展模块： 
