@@ -9,18 +9,19 @@ use CodeIgniter\Filters\FilterInterface;
 //检查是否登录的过滤器
 class LoginFilter implements FilterInterface
 {
-    public function before(RequestInterface $request)
+    // public function before(RequestInterface $request)   //ci4.0.3
+    public function before(RequestInterface $request, $arguments = NULL)  //ci4.0.4
     {
         // echo '前置过滤器，这里用杰检测是否登录<br>';exit;
 
         // print_r($request->uri->getSegments());exit;
 
         if (session('id') == '') {
-            $session=\Config\Services::session();
-            $jumpUrl=$request->uri->getSegment(1);
-            $jumpUrl=$jumpUrl!=''?$jumpUrl.'/'.$request->uri->getSegment(2):'';
+            $session = \Config\Services::session();
+            $jumpUrl = $request->uri->getSegment(1);
+            $jumpUrl = $jumpUrl != '' ? $jumpUrl . '/' . $request->uri->getSegment(2) : '';
             // echo $jumpUrl;exit;
-            $session->setFlashdata('jumpUrl',$jumpUrl);
+            $session->setFlashdata('jumpUrl', $jumpUrl);
 
             // echo '<hr>没有登录，请跳到登录页<hr><br>';
             return redirect()->to(site_url('login/index'));
@@ -29,16 +30,14 @@ class LoginFilter implements FilterInterface
         // echo '<hr>检查是否有权限访问<hr>';
         $rightsModel = new \App\Models\RightsModel();
 
-		if(!$rightsModel->permit()){
-			exit('<hr>你没有权限访问此页<hr>');
+        if (!$rightsModel->permit()) {
+            exit('<hr>你没有权限访问此页<hr>');
         }
-        
     }
 
-    public function after(RequestInterface $request,ResponseInterface $response)
+    // public function after(RequestInterface $request, ResponseInterface $response)    //ci4.0.3
+    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)  //ci4.0.4
     {
-        return view($this->request->uri->getSegment(1).'/'.$this->request->uri->getSegment(2));
+        return view($this->request->uri->getSegment(1) . '/' . $this->request->uri->getSegment(2));
     }
-
 }
-
